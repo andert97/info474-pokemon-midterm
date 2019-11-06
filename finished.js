@@ -144,15 +144,6 @@
           for (let i = 0; i < 800; i++) {
             if(d['Sp. Def'] == Object.values(dict[i])[0] && d['Total'] == Object.values(dict[i])[1] && d['Name'] != Object.values(dict[i])[3]) {
               flag++;
-              console.log(d['Sp. Def']);
-              console.log(d['Total']);
-              console.log(d['Name'])
-              console.log(d['Type 2'])
-              console.log('')
-              console.log(Object.values(dict[i])[0])
-              console.log(Object.values(dict[i])[1])
-              console.log(Object.values(dict[i])[3])
-              console.log(Object.values(dict[i])[2])
               if(d['Type 2'] != '' && Object.values(dict[i])[2] != '' && d['Type 2'] != Object.values(dict[i])[2]) {
                 type2++;
               }
@@ -233,22 +224,42 @@
         let display = this.checked ? "none" : "inline";
         generation_selected = selected;
 
-        if (selected == 'All') {
-            svgContainer.selectAll("circle")
-              .filter(function(d) { return d['Generation']})
-              .attr("display", display);
+        if (selected == 'All' && legendary_selected == 'All') {
+          svgContainer.selectAll("circle")
+            .filter(function(d) { return d['Legendary']})
+            .filter(function(d) {return d['Generation'];})
+            .attr("display", display);
+  
+        } else if (selected == 'All' && legendary_selected != 'All') {
+          svgContainer.selectAll("circle")
+          .filter(function(d) { return legendary_selected != d['Legendary']})
+          .attr('display', displayOthers)
 
+          svgContainer.selectAll("circle")
+          .filter(function(d) {return d['Generation'];})
+          .filter(function(d) { return legendary_selected == d['Legendary']})
+          .attr('display', display)
+
+        } else if (selected != 'All' && legendary_selected == 'All') {
+          svgContainer.selectAll("circle")
+          .filter(function(d) {  return selected != d['Generation']})
+          .attr('display', displayOthers)
+
+          svgContainer.selectAll("circle")
+          .filter(function(d) {  return selected == d['Generation']})
+          .filter(function(d) {return d['Legendary'];})
+          .attr('display', display)
         } else {
-        
-        
         svgContainer.selectAll("circle")
-            .filter(function(d) {return selected != d['Generation'];})
+            .filter(function(d) {return !(selected == d['Generation'] && legendary_selected == d['Legendary']);})
+            // .filter(function(d) { return legendary_selected != d['Legendary']})
             .attr("display", displayOthers);
             
         svgContainer.selectAll("circle")
-            .filter(function(d) {return selected == d['Generation'];})
-            .filter(function(d) { return legendary_selected == d['Legendary']})
+            .filter(function(d) {return (selected == d['Generation'] && legendary_selected == d['Legendary']);})
+            // .filter(function(d) { generation_selected == d['Generation']})
             .attr("display", display);
+  
         }});
 
     legendary_dropDown.on("change", function() {
@@ -257,23 +268,43 @@
       let display = this.checked ? "none" : "inline";
       legendary_selected = selected
 
-      if (selected == 'All') {
+      if (selected == 'All' && generation_selected == 'All') {
         svgContainer.selectAll("circle")
           .filter(function(d) { return d['Legendary']})
+          .filter(function(d) {return d['Generation'];})
           .attr("display", display);
 
+      } else if (selected == 'All' && generation_selected != 'All') {
+        svgContainer.selectAll("circle")
+        .filter(function(d) { return generation_selected != d['Generation']})
+        .attr('display', displayOthers)
+
+        svgContainer.selectAll("circle")
+        .filter(function(d) {return d['Legendary'];})
+        .filter(function(d) { return generation_selected == d['Generation']})
+        .attr('display', display)
+
+      } else if (selected != 'All' && generation_selected == 'All') {
+
+        svgContainer.selectAll("circle")
+        .filter(function(d) {  return d['Generation']})
+        .filter(function(d) {return legendary_selected == d['Legendary'];})
+        .attr('display', display)
+
+        svgContainer.selectAll("circle")
+        .filter(function(d) {  return legendary_selected != d['Legendary']})
+        .attr('display', displayOthers)
       } else {
-  
       svgContainer.selectAll("circle")
-          .filter(function(d) {return selected != d['Legendary'];})
+          .filter(function(d) {return !(selected == d['Generation'] && legendary_selected == d['Legendary']);})
           .attr("display", displayOthers);
           
       svgContainer.selectAll("circle")
-          .filter(function(d) {return selected == d['Legendary'];})
-          .filter(function(d) { return generation_selected == d['Generation']})
+          .filter(function(d) {return (selected == d['Legendary'] && generation_selected == d['Generation']);})
           .attr("display", display);
 
       }});
+
       
       let pixel_data = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 
