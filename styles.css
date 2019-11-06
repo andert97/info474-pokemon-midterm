@@ -1,0 +1,45 @@
+body { font: 12px Arial;}
+
+path {
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 10px 5px 10px 5px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    border-style: solid;
+    border-color: black;
+    pointer-events: none;
+}
+
+div#legendary {
+    position:absolute;
+    left:1350px;
+    top: 25px;
+}
+
+div#filter {
+    position:absolute;
+    left:1350px;
+    top: 100px;
+}
+
+div#my_legend {
+    position:absolute;
+    left:1350px;
+    top: 185px;
+}
